@@ -2,7 +2,7 @@
 #define INPUTFILE_H
 
 //INITIALIZING EVENT PARAMETERS
-double pt = 1.0; //IN GeV
+double pt = 1000.0; //IN MeV
 double eta = 1.0; //IN RADIANS
 double phi = 1.0; //IN RADIANS
 int event = 0;
