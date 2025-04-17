@@ -8,6 +8,35 @@ ClassImp(event)
 	
 using namespace std;
 
+
+// read N from the input file (number of events to be generated)
+//
+//create a Ttree file in root Name of the TTree file  (lambda_#mass_pt_#_N)
+//
+//loop over Number of events
+        // 1) run event generator
+	        // {which gives trackobject named Track_i (track of every information corresponds to event 1) }
+		
+        // 2) store the results of events in a branch named EVENT_1 
+	//
+	// 3) leaf_0 write all four momentum (it would be lorentz 4 vector)
+	//    leaf_1 eta, phi, phi1, theta1
+	//    leaf_2 invariant mass
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 event::event()
 {
 eventNumber=-1;
