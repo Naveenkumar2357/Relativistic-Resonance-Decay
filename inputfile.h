@@ -5,6 +5,7 @@
 double pt = 1000.0; //IN MeV
 double eta = 1.0; //IN RADIANS
 double phi = 1.0; //IN RADIANS
+double theta = 1.0 //
 int event = 0;
 
 //MASS IN MeV, MAY IMPLEMENT DIRECT READING OF PDG
