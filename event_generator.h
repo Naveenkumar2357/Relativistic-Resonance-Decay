@@ -22,8 +22,8 @@ public:
 private:
     Track track;                
 
-    double minEta;              //  (from input file)
-    double maxEta;              
+    double mineta;              //  (from input file)
+    double maxeta;              
 
     TRandom3 random_sampling;               
 };

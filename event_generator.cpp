@@ -1,4 +1,4 @@
-#include "eventgenerator.h"
+#include "event_generator.h"
 #include "inputfile.h"
 #include <cmath>
 
@@ -49,9 +49,9 @@ void eventgenerator::generate_event() {
     double theta_p = random_sampling.Uniform(0, M_PI);  // Polar 
 
     //using spherical co ordinates to find the momentum components
-    double px_p_rest = p_magnitude * sin(theta_p) * cos(phi_p);
-    double py_p_rest = p_magnitude * sin(theta_p) * sin(phi_p);
-    double pz_p_rest = p_magnitude * cos(theta_p);
+    double px_p_rest = p3_magnitude * sin(theta_p) * cos(phi_p);
+    double py_p_rest = p3_magnitude * sin(theta_p) * sin(phi_p);
+    double pz_p_rest = p3_magnitude * cos(theta_p);
 
     // Step 7: Momentum of the pion is opposite to that of the proton
     double px_pi_rest = -px_p_rest;
@@ -74,7 +74,13 @@ void eventgenerator::generate_event() {
     track.setinvariantmass(invariant_mass);
 
 
+    
 
+
+    //returning the whole track object
+    Track eventgenerator::getTrack() const {
+    return track;
+}
 
 
 
