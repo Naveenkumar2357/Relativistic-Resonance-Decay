@@ -2,22 +2,22 @@
 #define INPUTFILE_H
 
 //INITIALIZING EVENT PARAMETERS
-double ptmin = 1000.0; //IN MeV
-double ptmax = 1000.0;
+extern double ptmin; //IN MeV
+extern double ptmax;
 
-int N=10; //number of events
+extern int N; //number of events
 
-double etamin = -0.5;
-double etamax = 0.5;
+extern double etamin;
+extern double etamax;
 
 
 //MASS IN MeV, MAY IMPLEMENT DIRECT READING OF PDG
-const double lambdamass=1115.683;
+extern double lambdamass;
 const double protonmass=938.2720813;
 const double pionmass=139.57061;
 
 //PARTICLE CHARGES
 const int lambdacharge=0;
 
-
 #endif // INPUTFILE_H
+

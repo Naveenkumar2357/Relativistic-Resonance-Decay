@@ -16,8 +16,9 @@ public:
     eventgenerator();          
     ~eventgenerator();          
 
-    void generate_event();      
-    Track getTrack() const;     
+    void generate_event();
+    Track getTrack() const; 
+  
 
 private:
     Track track;                

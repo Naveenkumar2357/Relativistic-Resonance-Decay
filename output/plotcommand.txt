@@ -1,0 +1,40 @@
+
+step 1:
+open the plotinvarinatmass.cpp
+whereever you see events_{something}... replace it by number of events which you havce entered in the inputfile.cpp in the previous directory
+
+
+step2:
+// this this is the command we have to run in this directory to produce a exectable which will give us image file when we plot
+
+g++ plotinvariantmass.cpp `root-config --cflags --libs` -o plotinvariantmass
+
+step3:
+to run the executable
+./plotinvarinatmass
+
+step4:
+//copy and paste the image somewhere
+
+
+
+
+
+
+
+Analysis ideas.....................
+0)first getting a straigt line plot without smearing
+
+1) writing analysis scripts ____.cpp file to verify the random sampling is actually random (eta, phi_L, phi_p, theta_p   everthing is written in Ttree file)  (for smaller and large number of events)
+
+2) first we will use fixed pt (that is very narrow pt range) and interpret all the result. (1000, 3000)
+
+
+3) we used uniform random distribution for pt we can make it into gaussian and see how it affecting invarinat mass // event_genertor.cpp
+
+4) if pt does not affect the invarinat mass... we can find the transverse momentum distribution of proton, and pion  and see how it is affected by the initial pt range and pt gaussian width
+
+5) we can take the halflife of lambda from internet and we can make the gaussian smearing based on that...
+   
+   lastly we can implement the same decay for higher baryon mass but decay to same proton and lambda ---
+    

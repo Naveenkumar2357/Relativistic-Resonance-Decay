@@ -15,7 +15,7 @@ int main() {
     string treename = "events_" + to_string(lambdamass) + "_" + to_string(N);  // std string naming
     TTree *tree = new TTree(treename.c_str(), "");                             // changing to C string naming
 
-    string filename = "/home/naveenkumar/Desktop/courses/comp/Relativistic-Resonance-Decay/output/output_lambdaMass_" + to_string(lambdaMass) + "_events_" + to_string(N) + ".root";
+    string filename = "/home/naveenkumar/Desktop/courses/comp/Relativistic-Resonance-Decay/output/output_lambdaMass_" + to_string(lambdamass) + "_events_" + to_string(N) + ".root";
     TFile *file = new TFile(filename.c_str(), "RECREATE");
 
     // Variables to be stored in tree structure
@@ -37,6 +37,9 @@ int main() {
     tree->Branch("invariantmass", &invariantmass, "invariantmass/D");
 
     // Generate N events
+    cout<< "Generating " << N<<" "<<"events "<<endl;
+    cout<< "Results are being stored in directory output"<<endl;
+
     for (int i = 0; i < N; ++i) {
         generator.generate_event();
         Track track = generator.getTrack();
@@ -53,15 +56,17 @@ int main() {
         eta_L = track.geteta_L();
         pt_L = track.getpt_L();
         phi_L = track.getphi_L();
-        theta_p = track.gettheta_pi();  // you named it theta_pi but said it’s proton’s theta
+        theta_p = track.gettheta_p(); 
         phi_p = track.getphi_p();
 
         invariantmass = track.getinvariantmass();
 
         tree->Fill();
 
-	 cout << "Event "<< i+1 << "\n";
-         cout << "Data stored in '" << filename << "' as tree: " << treename << endl;
+	 
+         cout << "Event " <<i+1<<" stored in tree: " << treename << endl;
+
+//	 track.print_track();
 
     }
 

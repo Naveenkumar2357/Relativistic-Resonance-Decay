@@ -1,117 +1,80 @@
 #include "event_generator.h"
 #include "inputfile.h"
 #include <cmath>
+#include <ctime>
+#include "TLorentzVector.h"
 
+using ROOT::Math::LorentzVector;
 
-//constructor and destructor
 eventgenerator::eventgenerator() {
     mineta = etamin;
     maxeta = etamax;
     random_sampling.SetSeed(time(0));
 }
 
-
 eventgenerator::~eventgenerator() {}
 
-
-//memberfunction
-//random sampling // eta, pt, and phi for Lambda
 void eventgenerator::generate_event() {
+    double m_lambda = lambdamass;
+    double m_proton = protonmass;
+    double m_pion = pionmass;
 
-    double m_lambda = lambdamass;  // Lambda, proton, pion mass read from headerinputfile and stored in dummy variable 
-    double m_proton = protonmass;  
-    double m_pion = pionmass;      
-
-
-    
     double eta_L = random_sampling.Uniform(mineta, maxeta);
     double pt_L = random_sampling.Uniform(ptmin, ptmax);
     double phi_L = random_sampling.Uniform(0, 2 * M_PI);
 
-    double pz_L = pt_L * sinh(eta_L);    // eta is psueedo rapidity
+    double pz_L = pt_L * sinh(eta_L);
     double px_L = pt_L * cos(phi_L);
     double py_L = pt_L * sin(phi_L);
 
-    // object track created and all information is being stored
     track.setP4_L(px_L, py_L, pz_L, m_lambda);
     track.seteta_L(eta_L);
     track.setphi_L(phi_L);
     track.setpt_L(pt_L);
 
+    double p3_magnitude = sqrt((m_lambda * m_lambda - pow(m_proton + m_pion, 2)) *
+                               (m_lambda * m_lambda - pow(m_proton - m_pion, 2))) / (2 * m_lambda);
 
-      // formula to find the 3 momentum of decaying particles in lambda's rest frame(eta_L , phi_L)
-      // P_p = - P_pi = p3_magnitude 
-    double p3_magnitude = sqrt( (m_lambda * m_lambda - (m_proton + m_pion) * (m_proton + m_pion)) * (m_lambda * m_lambda - (m_proton - m_pion) * (m_proton - m_pion)) ) / (2 * m_lambda); // magnitude of 3 momentum of proton and pion
+    double phi_p = random_sampling.Uniform(0, 2 * M_PI);
+    double theta_p = random_sampling.Uniform(0, M_PI);
 
-    //isotropically performing decay
-    //sampling theta and phi for decaying particles
-    double phi_p = random_sampling.Uniform(0, 2 * M_PI);  // Azimuthal 
-    double theta_p = random_sampling.Uniform(0, M_PI);  // Polar 
-
-    //using spherical co ordinates to find the momentum components
     double px_p_rest = p3_magnitude * sin(theta_p) * cos(phi_p);
     double py_p_rest = p3_magnitude * sin(theta_p) * sin(phi_p);
     double pz_p_rest = p3_magnitude * cos(theta_p);
 
-    // Step 7: Momentum of the pion is opposite to that of the proton
     double px_pi_rest = -px_p_rest;
     double py_pi_rest = -py_p_rest;
     double pz_pi_rest = -pz_p_rest;
 
-    //storing this momentum in rest frame for a moment
-    track.setP4_p(px_p_rest, py_p_rest, pz_p_rest, m_proton);
-    track.setP4_pi(px_pi_rest, py_pi_rest, pz_pi_rest, m_pion);
+    TLorentzVector proton_4mom(px_p_rest, py_p_rest, pz_p_rest, sqrt(p3_magnitude * p3_magnitude + m_proton * m_proton));
+    TLorentzVector pion_4mom(px_pi_rest, py_pi_rest, pz_pi_rest, sqrt(p3_magnitude * p3_magnitude + m_pion * m_pion));
 
-    //boosting back to lab frame(eta_L, phi_L)
-    track.P4_p.Boost(track.P4_L.Vect());  
-    track.P4_pi.Boost(track.P4_L.Vect());
+    TLorentzVector lambda_4mom = track.getP4_L();
+    TVector3 boostvec = lambda_4mom.BoostVector();
 
-    LorentzVector<PxPyPzM4D<double>> P4_total = P4_p + P4_pi;
-    double invariant_mass = P4_total.M();
-   
+    proton_4mom.Boost(boostvec);
+    pion_4mom.Boost(boostvec);
 
-    //invariant mass
-    track.setinvariantmass(invariant_mass);
-
-
-    
+    track.setP4_p(proton_4mom.Px(), proton_4mom.Py(), proton_4mom.Pz(), m_proton);
+    track.setP4_pi(pion_4mom.Px(), pion_4mom.Py(), pion_4mom.Pz(), m_pion);
+    track.setphi_p(phi_p);
+    track.settheta_p(theta_p);
 
 
-    //returning the whole track object
-    Track eventgenerator::getTrack() const {
-    return track;
-}
+    TLorentzVector after_decay = proton_4mom + pion_4mom;
+    double E = after_decay.E();
+    double p2 = after_decay.Vect().Mag2();
+    double inv_mass = sqrt(E * E - p2);
 
+    track.setinvariantmass(inv_mass);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    track.print_track();
+    cout<<endl;
 }
 
 Track eventgenerator::getTrack() const {
     return track;
 }
+
+
 
