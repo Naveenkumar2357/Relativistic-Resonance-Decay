@@ -37,4 +37,25 @@ Analysis ideas.....................
 5) we can take the halflife of lambda from internet and we can make the gaussian smearing based on that...
    
    lastly we can implement the same decay for higher baryon mass but decay to same proton and lambda ---
-    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+presentation ideas:
+
+1) forwkflow
+2)physics behind it
+3) codes
+4)anlysis
+
