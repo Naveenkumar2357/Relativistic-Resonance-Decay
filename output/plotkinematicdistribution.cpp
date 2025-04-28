@@ -31,13 +31,13 @@ void plotKinematicDistribution() {
     tree->SetBranchAddress("kinematics_L", &eta_L);
     std::cout << "Branch 'kinematics_L' connected successfully." << std::endl;
 
-    TH1F *hist1 = new TH1F("histKinematicsEta", "Eta Distribution", 100, -4.0, 4.0);
+    TH1F *hist1 = new TH1F("histKinematicsEta", "Eta Distribution", 100, -2.0, 2.0);
     std::cout << "Histogram 1 created." << std::endl;
 	
-	TH1F *hist2 = new TH1F("histKinematicsPhi", "PT Distribution", 100, -4.0, 4.0);
+	TH1F *hist2 = new TH1F("histKinematicsPhi", "PT Distribution", 100, -1.0, 1.0);
     std::cout << "Histogram 2 created." << std::endl;
 	
-	TH1F *hist3 = new TH1F("histKinematicsPT", "Phi Distribution", 100, -4.0, 4.0);
+	TH1F *hist3 = new TH1F("histKinematicsPT", "Phi Distribution", 100, -0.1, 3.3);
     std::cout << "Histogram 3 created." << std::endl;
 
     Long64_t nEntries = tree->GetEntries();
@@ -64,25 +64,25 @@ void plotKinematicDistribution() {
     canvas1->SaveAs("2000_eta.png");
     std::cout << "Histogram saved as 2000_eta.png." << std::endl;
 	
-	TCanvas *canvas2 = new TCanvas("canvas2", "PT Dist. Histogram", 800, 600);
+	TCanvas *canvas2 = new TCanvas("canvas2", "Phi Dist. Histogram", 800, 600);
     std::cout << "Canvas created." << std::endl;
 
-    hist2->GetXaxis()->SetTitle("Transverse Momentum (pT)");
+    hist2->GetXaxis()->SetTitle("Phi");
     hist2->GetYaxis()->SetTitle("Counts");
     hist2->Draw();
 
-    canvas2->SaveAs("2000_pt.png");
-    std::cout << "Histogram saved as 2000_pt.png." << std::endl;
+    canvas2->SaveAs("2000_phi.png");
+    std::cout << "Histogram saved as 2000_phi.png." << std::endl;
 	
-	TCanvas *canvas3 = new TCanvas("canvas3", "Phi Dist. Histogram", 800, 600);
+	TCanvas *canvas3 = new TCanvas("canvas3", "Transverse Momentum (pT) Histogram", 800, 600);
     std::cout << "Canvas created." << std::endl;
 
-    hist3->GetXaxis()->SetTitle("Phi");
+    hist3->GetXaxis()->SetTitle("pT");
     hist3->GetYaxis()->SetTitle("Counts");
     hist3->Draw();
 
-    canvas3->SaveAs("2000_phi.png");
-    std::cout << "Histogram saved as 2000_phi.png." << std::endl;
+    canvas3->SaveAs("2000_pt.png");
+    std::cout << "Histogram saved as 2000_pt.png." << std::endl;
 
 	delete canvas1;
 	delete canvas2;
