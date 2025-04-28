@@ -31,13 +31,13 @@ void plotKinematicDistribution() {
     tree->SetBranchAddress("kinematics_L", &eta_L);
     std::cout << "Branch 'kinematics_L' connected successfully." << std::endl;
 
-    TH1F *hist1 = new TH1F("histKinematicsEta", "Eta Distribution", 100, 0.0, 4.0);
+    TH1F *hist1 = new TH1F("histKinematicsEta", "Eta Distribution", 100, -4.0, 4.0);
     std::cout << "Histogram 1 created." << std::endl;
 	
-	TH1F *hist2 = new TH1F("histKinematicsPhi", "Phi Distribution", 100, 0.0, 7.0);
+	TH1F *hist2 = new TH1F("histKinematicsPhi", "PT Distribution", 100, -4.0, 4.0);
     std::cout << "Histogram 2 created." << std::endl;
 	
-	TH1F *hist3 = new TH1F("histKinematicsPT", "pT Distribution", 100, 0.0, 10000.0);
+	TH1F *hist3 = new TH1F("histKinematicsPT", "Phi Distribution", 100, -4.0, 4.0);
     std::cout << "Histogram 3 created." << std::endl;
 
     Long64_t nEntries = tree->GetEntries();
@@ -67,7 +67,7 @@ void plotKinematicDistribution() {
 	TCanvas *canvas2 = new TCanvas("canvas2", "PT Dist. Histogram", 800, 600);
     std::cout << "Canvas created." << std::endl;
 
-    hist2->GetXaxis()->SetTitle("Phi");
+    hist2->GetXaxis()->SetTitle("Transverse Momentum (pT)");
     hist2->GetYaxis()->SetTitle("Counts");
     hist2->Draw();
 
@@ -81,13 +81,13 @@ void plotKinematicDistribution() {
     hist3->GetYaxis()->SetTitle("Counts");
     hist3->Draw();
 
-    canvas3->SaveAs("2000_eta.png");
+    canvas3->SaveAs("2000_phi.png");
     std::cout << "Histogram saved as 2000_phi.png." << std::endl;
 
-    delete canvas1;
+	delete canvas1;
 	delete canvas2;
 	delete canvas3;
-    delete hist1;
+	delete hist1;
 	delete hist2;
 	delete hist3;
     file->Close();
