@@ -30,30 +30,26 @@ void plotKinematicDistribution() {
     tree->SetBranchAddress("kinematics_L", &kinematics_L);
     std::cout << "Branch 'kinematics_L' connected successfully." << std::endl;
 
-    TH1F *hist = new TH1F("histKinematicsEta", "Eta Distribution", 100, 0.0, 7.0);
-    std::cout << "Histogram created." << std::endl;
+    TH1F *hist1 = new TH1F("histKinematicsEta", "Eta Distribution", 100, 0.0, 4.0);
+    std::cout << "Histogram 1 created." << std::endl;
+	
+	TH1F *hist2 = new TH1F("histKinematicsPhi", "Phi Distribution", 100, 0.0, 7.0);
+    std::cout << "Histogram 2 created." << std::endl;
 
     Long64_t nEntries = tree->GetEntries();
     std::cout << "Number of entries in the tree: " << nEntries << std::endl;
 
-    TRandom3 randGen(0); // Seed 0 for random seed
-    double sigma = 0.002; // Smearing width (in MeV)
-
     for (Long64_t i = 0; i < nEntries; ++i) {
         tree->GetEntry(i);
 
-        // Apply Gaussian smearing
-        double smearedMass = randGen.Gaus(invariantmass, sigma);
+        hist1->Fill(eta_L);
+		hist2->Fill(phi_L);
 
-        hist->Fill(eta_L);
-
-        /* std::cout << "invariantmass[" << i << "] = " << invariantmass
-                  << ", smeared = " << smearedMass << std::endl; */
     }
 
-    std::cout << "Finished filling the histogram." << std::endl;
+    std::cout << "Finished filling the histograms." << std::endl;
 
-    TCanvas *canvas = new TCanvas("canvas", "Invariant Mass Histogram", 800, 600);
+    TCanvas *canvas1 = new TCanvas("canvas1", "Eta Dist. Histogram", 800, 600);
     std::cout << "Canvas created." << std::endl;
 
     hist->GetXaxis()->SetTitle("Eta");
@@ -62,6 +58,16 @@ void plotKinematicDistribution() {
 
     canvas->SaveAs("2000_eta.png");
     std::cout << "Histogram saved as 2000_eta.png." << std::endl;
+	
+	TCanvas *canvas2 = new TCanvas("canvas2", "Phi Dist. Histogram", 800, 600);
+    std::cout << "Canvas created." << std::endl;
+
+    hist->GetXaxis()->SetTitle("Phi");
+    hist->GetYaxis()->SetTitle("Counts");
+    hist->Draw();
+
+    canvas->SaveAs("2000_eta.png");
+    std::cout << "Histogram saved as 2000_phi.png." << std::endl;
 
     delete canvas;
     delete hist;
