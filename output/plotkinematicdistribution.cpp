@@ -26,8 +26,8 @@ void plotKinematicDistribution() {
     }
     std::cout << "Tree 'events_1115.683000_2000' found successfully." << std::endl;
 
-    Double_t eta_L;
-	Double_t phi_L;
+    Double_t eta_L[3];
+	
     tree->SetBranchAddress("kinematics_L", &eta_L);
     std::cout << "Branch 'kinematics_L' connected successfully." << std::endl;
 
@@ -61,7 +61,7 @@ void plotKinematicDistribution() {
     hist1->GetYaxis()->SetTitle("Counts");
     hist1->Draw();
 
-    canvas->SaveAs("2000_eta.png");
+    canvas1->SaveAs("2000_eta.png");
     std::cout << "Histogram saved as 2000_eta.png." << std::endl;
 	
 	TCanvas *canvas2 = new TCanvas("canvas2", "PT Dist. Histogram", 800, 600);
@@ -71,8 +71,8 @@ void plotKinematicDistribution() {
     hist2->GetYaxis()->SetTitle("Counts");
     hist2->Draw();
 
-    canvas->SaveAs("2000_eta.png");
-    std::cout << "Histogram saved as 2000_phi.png." << std::endl;
+    canvas2->SaveAs("2000_pt.png");
+    std::cout << "Histogram saved as 2000_pt.png." << std::endl;
 	
 	TCanvas *canvas3 = new TCanvas("canvas3", "Phi Dist. Histogram", 800, 600);
     std::cout << "Canvas created." << std::endl;
@@ -81,12 +81,8 @@ void plotKinematicDistribution() {
     hist3->GetYaxis()->SetTitle("Counts");
     hist3->Draw();
 
-    canvas1->SaveAs("2000_eta.png");
+    canvas3->SaveAs("2000_eta.png");
     std::cout << "Histogram saved as 2000_phi.png." << std::endl;
-	canvas2->SaveAs("2000_PT.png");
-    std::cout << "Histogram saved as 2000_PT.png." << std::endl;
-	canvas3->SaveAs("2000_phi.png");
-    std::cout << "Histogram saved as 2000_et.png." << std::endl;
 
     delete canvas1;
 	delete canvas2;
